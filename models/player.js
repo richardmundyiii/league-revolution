@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const playerSchema = new mongoose.Schema({
   name: String,
+  userSub: { type: String, required: true, unique: true },
   team: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
   stats: {
     wins: Number,
