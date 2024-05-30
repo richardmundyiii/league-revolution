@@ -21,10 +21,17 @@ const seasonSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    addSeason(state, action) {
+      state.seasons.push(action.payload);
+    },
   },
 });
 
-export const { fetchSeasonsStart, fetchSeasonsSuccess, fetchSeasonsFailure } =
-  seasonSlice.actions;
+export const {
+  fetchSeasonsStart,
+  fetchSeasonsSuccess,
+  fetchSeasonsFailure,
+  addSeason,
+} = seasonSlice.actions;
 
 export default seasonSlice.reducer;

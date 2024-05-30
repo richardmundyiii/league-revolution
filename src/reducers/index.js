@@ -1,8 +1,8 @@
-import { combineReducers } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
 import seasonReducer from "./seasonReducer";
 
 const rootReducer = combineReducers({
-  seasons: seasonReducer,
+  season: seasonReducer,
 });
 
 export default rootReducer;
