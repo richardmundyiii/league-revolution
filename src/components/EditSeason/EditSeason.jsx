@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchSeasons, updateSeason } from "../../actions/seasonActions";
+import { fetchDivisions } from "../../actions/divisionActions";
+import NewDivision from "../NewDivision/NewDivision";
+import CreateTeam from "../CreateTeam/CreateTeam";
 
 const EditSeason = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const seasons = useSelector((state) => state.season.seasons);
+  const divisions = useSelector((state) => state.division.divisions);
   const season = seasons.find((season) => season._id === id);
 
   const [name, setName] = useState("");
@@ -21,6 +25,10 @@ const EditSeason = () => {
       dispatch(fetchSeasons());
     }
   }, [season, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchDivisions(id));
+  }, [dispatch, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,6 +65,21 @@ const EditSeason = () => {
         </form>
       ) : (
         <p>Loading...</p>
+      )}
+      <NewDivision seasonId={id} />
+      <h3>Divisions</h3>
+      {divisions.length > 0 ? (
+        <ul>
+          {divisions.map((division) => (
+            <li key={division._id}>
+              {division.name}
+              <CreateTeam divisionId={division._id} />{" "}
+              {/* Pass divisionId here */}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No divisions available.</p>
       )}
     </div>
   );

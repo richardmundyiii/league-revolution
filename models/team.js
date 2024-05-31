@@ -9,7 +9,7 @@ const teamSchema = new Schema({
   stats: {
     wins: Number,
     losses: Number,
-    totalLegsWon: Numner,
+    totalLegsWon: Number,
     totalLegsLost: Number,
     teamGamesWon: Number,
     teamGamesLost: Number,
