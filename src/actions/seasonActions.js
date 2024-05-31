@@ -10,7 +10,7 @@ export const fetchSeasons = () => async (dispatch) => {
   dispatch(fetchSeasonsStart());
 
   try {
-    const response = await fetch("/api/seasons"); // Replace with your API endpoint
+    const response = await fetch("/api/seasons");
     const data = await response.json();
     dispatch(fetchSeasonsSuccess(data));
   } catch (error) {
@@ -31,7 +31,11 @@ export const createSeason = (season) => async (dispatch) => {
       body: JSON.stringify(season),
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json(); // Get response as JSON
     dispatch(addSeason(data)); // Add the new season to the state
   } catch (error) {
     dispatch(fetchSeasonsFailure(error.toString()));

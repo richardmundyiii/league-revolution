@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSeason } from "../../actions/seasonActions";
+import { createSeason, fetchSeasons } from "../../actions/seasonActions";
 
 const NewSeason = () => {
   const [name, setName] = useState("");
   const [year, setYear] = useState("");
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.season.loading);
-  const error = useSelector((state) => state.season.error);
+  const seasonState = useSelector(
+    (state) => state.season || { loading: false, error: null }
+  ); // Ensure season state is defined
+  const loading = seasonState.loading;
+  const error = seasonState.error;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(createSeason({ name, year }));
-  };
+  async function handleSubmit(evt) {
+    evt.preventDefault();
+    await dispatch(createSeason({ name, year }));
+    dispatch(fetchSeasons());
+  }
 
   return (
     <div>
