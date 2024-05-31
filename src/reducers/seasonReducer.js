@@ -12,6 +12,7 @@ const seasonSlice = createSlice({
   reducers: {
     fetchSeasonsStart(state) {
       state.loading = true;
+      state.error = null;
     },
     fetchSeasonsSuccess(state, action) {
       state.loading = false;
@@ -23,6 +24,16 @@ const seasonSlice = createSlice({
     },
     addSeason(state, action) {
       state.seasons.push(action.payload);
+      state.loading = false;
+    },
+    updateSeasonSuccess(state, action) {
+      const index = state.seasons.findIndex(
+        (season) => season._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.seasons[index] = action.payload;
+      }
+      state.loading = false;
     },
   },
 });
@@ -32,6 +43,7 @@ export const {
   fetchSeasonsSuccess,
   fetchSeasonsFailure,
   addSeason,
+  updateSeasonSuccess,
 } = seasonSlice.actions;
 
 export default seasonSlice.reducer;

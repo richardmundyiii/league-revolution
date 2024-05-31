@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSeasons } from "../../actions/seasonActions";
+import { useNavigate } from "react-router-dom";
 
 export default function ShowSeasons() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const seasons = useSelector((state) => state.season.seasons);
   const loading = useSelector((state) => state.season.loading);
   const error = useSelector((state) => state.season.error);
@@ -41,7 +43,11 @@ export default function ShowSeasons() {
                   <td>{season.year}</td>
                   {season.isActive === false ? <td>No</td> : <td>Active</td>}
                   <td>
-                    <button>Edit</button>
+                    <button
+                      onClick={() => navigate(`/admin/edit/${season._id}`)}
+                    >
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}

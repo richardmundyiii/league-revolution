@@ -6,4 +6,6 @@ router.get("/", seasonCtrl.index);
 
 router.post("/", seasonCtrl.create);
 
+router.put("/:id", seasonCtrl.updateSeason);
+
 module.exports = router;
